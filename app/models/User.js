@@ -14,6 +14,7 @@ const UserModel = new Schema({
 	"firstName"		:{ type:String },
 	"lastName"		:{type:String},
 	"email"			  :{type:String,required:true,index:{ unique:true }},
+	"password"		:{type:String,required:true},
 	"mobileNumber":{type:String},
 	"address"		  :addressSubSchema,
 	"created_on"	:{type: Date,default: Date.now()},

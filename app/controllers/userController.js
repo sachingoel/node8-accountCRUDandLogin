@@ -1,15 +1,16 @@
 'use strict';
 let User = require('./../models/User');
 const bcrypt  = require('bcrypt');
+const authUtils = require('./../utils/authUtils');
 const logger = require('./../../logger');
 
 async function registerUser(req,res,next){
-  
   try{
-    let user = await User.findOne({'email':req.body.email,"isVerified":true});
+    let user = await User.findOne({'email':req.body.email});
     if(user){
       let error = new Error();
-      error.msg = 'Email or mobile number already exists,please register with diffrent email id or mobile number.'
+      error.msg = 'Email already exists,please register with diffrent email id.'
+      throw error;
     }
     let salt = await bcrypt.genSalt(4);
     let pwd = await bcrypt.hash(req.body.password,salt);
@@ -19,16 +20,51 @@ async function registerUser(req,res,next){
     		newUser.address = req.body.address;
     		newUser.mobileNumber = req.body.mobileNumber;
         newUser.email = req.body.email;
-        newUser['password'] = hash;
-        delete req.body.password;
+        newUser.password = pwd;
+        console.log("user is ========>",user);
         let result = await newUser.save();
+    logger.info("User is created successfully with id: ",)
+    res.json({succes:true,user_id:result._id})
   }catch(error){
+    logger.error("Error while creating user for email %s is:",req.body.email,error);
+    res.json({sucess:false,error:error})
+  }
+}
+
+async function userLogin (req,res,next){
+  try{
+  let user = await User.findOne({email:req.body.email});
+    if(user){
+      let result = await bcrypt.compare(req.body.password,user.password);
+      if(result){
+        var token = authUtils.createToken(user);
+        res.json({success:true,message:'Enjoy your token!',accessToken:token})
+      }else{
+        let error = new Error();
+        error.message = "Incorrect password.Please try again."
+        error.status = 401;
+        throw error;
+      }
+    }else{
+    let error = new Error();
+    error.message = "User doesn't exist with this email";
+    error.status = 404;
+    throw error;
+    }
+  }catch(error){
+    logger.error("Error in login for email %s is:",req.body.email,error);
+    res.json({success:false,error:error})
+  }
+}
+
+async function updateUser (req,res,next){
+  try{
+
+  }catch{
 
   }
 }
 
-
-
-
-
 exports.registerUser = registerUser;
+exports.userLogin    = userLogin;
+exports.userUpdate   = userUpdate;
