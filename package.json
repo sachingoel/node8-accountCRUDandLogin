@@ -1,0 +1,28 @@
+{
+  "name": "node8-account-crud-login",
+  "version": "1.0.0",
+  "description": "Create set of Nodejs APIs that allows the user to sign-up for an account, login and edit a user profile.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sachingoel/node8-accountCRUDandLogin.git"
+  },
+  "author": "Sachin Goel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sachingoel/node8-accountCRUDandLogin/issues"
+  },
+  "homepage": "https://github.com/sachingoel/node8-accountCRUDandLogin#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "celebrate": "^8.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
+    "winston": "^3.0.0"
+  }
+}
