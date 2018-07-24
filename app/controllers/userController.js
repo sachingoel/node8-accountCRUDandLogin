@@ -21,7 +21,6 @@ async function registerUser(req,res,next){
     		newUser.mobileNumber = req.body.mobileNumber;
         newUser.email = req.body.email;
         newUser.password = pwd;
-        console.log("user is ========>",user);
         let result = await newUser.save();
     logger.info("User is created successfully with id: ",)
     res.json({succes:true,user_id:result._id})
@@ -57,11 +56,13 @@ async function userLogin (req,res,next){
   }
 }
 
-async function updateUser (req,res,next){
+async function userUpdate (req,res,next){
   try{
-
-  }catch{
-
+    let updatedUser = await User.findByIdAndUpdate(res.locals.user._id,req.body);
+    res.json({success:true,'updated_User':updatedUser._id})
+  }catch(error){
+    logger.error("Error while updating user with is: ",error);
+    res.json({success:false,error:error});
   }
 }
 
