@@ -3,6 +3,7 @@ let User = require('./../models/User');
 const bcrypt  = require('bcrypt');
 const authUtils = require('./../utils/authUtils');
 const logger = require('./../../logger');
+const uuid  = require('uuid');
 
 async function registerUser(req,res,next){
   try{
@@ -15,6 +16,7 @@ async function registerUser(req,res,next){
     let salt = await bcrypt.genSalt(4);
     let pwd = await bcrypt.hash(req.body.password,salt);
     let newUser = new User();
+        newUser.id = uuid.v4();
 				newUser.firstName = req.body.firstName;
     		newUser.lastName = req.body.lastName;
     		newUser.address = req.body.address;
@@ -23,7 +25,7 @@ async function registerUser(req,res,next){
         newUser.password = pwd;
         let result = await newUser.save();
     logger.info("User is created successfully with id: ",)
-    res.json({succes:true,user_id:result._id})
+    res.json({succes:true,user_id:result.id})
   }catch(error){
     logger.error("Error while creating user for email %s is:",req.body.email,error);
     res.json({sucess:false,error:error})
@@ -58,8 +60,8 @@ async function userLogin (req,res,next){
 
 async function userUpdate (req,res,next){
   try{
-    let updatedUser = await User.findByIdAndUpdate(res.locals.user._id,req.body);
-    res.json({success:true,'updated_User':updatedUser._id})
+    let updatedUser = await User.findByIdAndUpdate(res.locals.user.id,req.body);
+    res.json({success:true,'updated_User':updatedUser.id})
   }catch(error){
     logger.error("Error while updating user with is: ",error);
     res.json({success:false,error:error});

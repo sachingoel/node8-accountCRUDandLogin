@@ -5,7 +5,7 @@ const logger = require('./../../logger');
 
 exports.createToken = function(user){
   let payload         =   {};
-  payload.user_id     =   user._id,
+  payload.user_id     =   user.id,
   payload.firstName   =   user.firstName,
   payload.lastName    =   user.lastName,
   payload.email       =   user.email,
@@ -25,7 +25,7 @@ exports.createToken = function(user){
 exports.authRequired = async function(req,res,next){
   try{
     let decoded = await jwt.verify(req.headers['x-auth-token'],'t{-}!s+!s+t{-}<+$<(R<t+k<Y');
-    let user = await User.findById(decoded.user_id);
+    let user = await User.findOne({id:decoded.user_id});
     if(user){
       res.locals.user=user;
       next();
