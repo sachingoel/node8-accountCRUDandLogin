@@ -7,7 +7,7 @@ const enableAuth = require('./../utils/authUtils').authRequired;
 
 
 router.post('/upload',enableAuth,fileController.uploadFile);
-router.get('/list',enableAuth,fileController.listimages);
+router.get('/list',enableAuth,fileController.listFiles);
 
 
 module.exports = router;

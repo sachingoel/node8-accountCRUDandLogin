@@ -86,7 +86,7 @@ async function uploadInMongo(req, res, next){
   // controller to upload files to local mongo gridFs
 }
 
-async function listimages(req,res,next){
+async function listFiles(req,res,next){
   let filter = {userId:mongoose.Types.ObjectId(res.locals.user._id)}
   if(req.query.isPublic){
     filter['isPublic'] = req.query.isPublic
@@ -114,4 +114,4 @@ async function listimages(req,res,next){
 
 exports.uploadFile = uploadFile;
 exports.uploadInMongo = uploadInMongo;
-exports.listimages = listimages;
+exports.listFiles = listFiles;
