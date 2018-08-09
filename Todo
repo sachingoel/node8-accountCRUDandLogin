@@ -5,3 +5,4 @@
 5) add validation schemas for file upload and listing
 6) apply unique if not null constraint on email field of user schema
 7) store versioning of files
+8) Replace MongoDb with Dynamo DB
