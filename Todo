@@ -1,0 +1,8 @@
+1) Allow resizing and filter options only to png,jpeg and bmp files
+2) Add support for adding image filters like crop,flip,mirror,rotate,brightness,contrast,greyscale,sepia etc
+3) add support for adding tags to files on s3
+4) Instead of creating new entry push the new version number in pre-existed file in db
+5) add validation schemas for file upload and listing
+6) apply unique if not null constraint on email field of user schema
+7) store versioning of files
+8) Replace MongoDb with Dynamo DB
